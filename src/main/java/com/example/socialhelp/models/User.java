@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.example.socialhelp.models.Сategory;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Locale;
 
 @Data
 @Builder
@@ -32,13 +34,15 @@ public class User {
 
     private String confirmCode;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Token> tokens;
-
     private double rating;
 
     private String gender;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Token> tokens;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Сategory> categories;
     public enum State {
         ACTIVE, BANNED
     }

@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:49446/login
+POST http://localhost:55997/login
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:65116/sign_up
+POST http://localhost:55997/sign_up
 Content-Type: application/json
 
 {
