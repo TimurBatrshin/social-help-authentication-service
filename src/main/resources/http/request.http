@@ -1,0 +1,34 @@
+POST http://localhost/authentication/sign_up
+Content-Type: application/json
+
+{
+  "firstName": "Timur1",
+  "lastName": "Batrshin1",
+  "email": "batrshintimur@yandex.ru",
+  "password": "Timur007",
+  "age": "20",
+  "gender": "men"
+}
+
+###
+POST http://localhost:49446/login
+Content-Type: application/json
+
+{
+  "email": "batrshintimur@yandex.ru",
+  "password": "Timur007"
+}
+
+###
+
+POST http://localhost:65116/sign_up
+Content-Type: application/json
+
+{
+  "firstName": "Timur1",
+  "lastName": "Batrshin1",
+  "email": "batrshintimur@yandex.ru",
+  "password": "Timur007",
+  "age": "20",
+  "gender": "men"
+}
