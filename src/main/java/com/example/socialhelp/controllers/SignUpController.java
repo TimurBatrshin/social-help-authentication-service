@@ -2,6 +2,7 @@ package com.example.socialhelp.controllers;
 
 import com.example.socialhelp.dto.SignUpForm;
 import com.example.socialhelp.services.SignUpService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ public class SignUpController {
     @Autowired
     private SignUpService signUpService;
 
+    @Tag(name = "Регистрация")
     @PermitAll
     @PostMapping("/sign_up")
     public ResponseEntity<?> signUp(@RequestBody SignUpForm signUpForm) {

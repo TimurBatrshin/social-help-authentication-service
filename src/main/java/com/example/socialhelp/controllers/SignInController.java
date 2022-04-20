@@ -10,6 +10,7 @@ import com.example.socialhelp.models.User;
 import com.example.socialhelp.security.util.JwtTokenUtils;
 import com.example.socialhelp.services.LoginService;
 import com.example.socialhelp.services.TokenService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,11 +30,7 @@ public class SignInController {
     @Autowired
     private TokenService tokenService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "Test";
-    }
-
+    @Tag(name = "Аутентификация")
     @PermitAll
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
