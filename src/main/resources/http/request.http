@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:55997/login
+POST http://localhost:50719/login
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:55997/sign_up
+POST http://localhost:50666/sign_up
 Content-Type: application/json
 
 {
@@ -30,5 +30,6 @@ Content-Type: application/json
   "email": "batrshintimur@yandex.ru",
   "password": "Timur007",
   "age": "20",
-  "gender": "men"
+  "gender": "men",
+  "category": "medicine"
 }

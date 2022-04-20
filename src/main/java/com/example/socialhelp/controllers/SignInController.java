@@ -29,12 +29,6 @@ public class SignInController {
     @Autowired
     private TokenService tokenService;
 
-    @PermitAll
-    @PostMapping("/sign_in")
-    public ResponseEntity<?> signUp(@RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(loginService.login(loginDto));
-    }
-
     @GetMapping("/test")
     public String test() {
         return "Test";
@@ -47,9 +41,6 @@ public class SignInController {
             User user = loginService.login(loginDto);
             TokenDto tokenDto = tokenService.generateToken(user);
             tokenService.saveToken(tokenDto, user);
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JwtTokenUtils.SECRET_KEY))
-                    .build().verify(tokenDto.getToken());
-            System.out.println(decodedJWT.getToken());
             return ResponseEntity.ok(tokenDto);
         } catch (UsernameNotFoundException e) {
             JSONObject jsonObject = new JSONObject();

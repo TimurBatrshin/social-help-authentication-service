@@ -21,17 +21,7 @@ public class Сategory {
 
     private String category;
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "specializations_id"))
-    private List<Specialization> specializations;
+    @OneToOne(mappedBy = "categories", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    private User user;
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
-
-    public enum Categories {
-        medicine
-    }
 }

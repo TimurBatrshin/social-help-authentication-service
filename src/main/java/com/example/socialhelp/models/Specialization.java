@@ -20,12 +20,7 @@ public class Specialization {
 
     private String specializations;
 
-    @ManyToMany(mappedBy = "specializations")
-    private List<Сategory> categories;
-
-    public enum Specializations {
-        Pediatrician, Therapist, Gynecologist, Endocrinologist, Dermatologist, Allergist_Immunologist, Gastroenterologist, Psychologist, Cosmetologist, Urologist, Neurologist, Venereologist, Veterinarian, Cardiologist, ENT, Ophthalmologist, Oncologist, Traumatologist, Dentist
-    }
-
+    @ManyToOne
+    private Сategory category;
 
 }

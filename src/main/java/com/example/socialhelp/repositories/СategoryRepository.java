@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface СategoryRepository extends JpaRepository<Сategory, Long> {
 
-    List<Сategory> findAllByCategory(String name);
+    Сategory getFirstByCategory(String name);
 
 }

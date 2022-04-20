@@ -29,6 +29,8 @@ public class SignUpForm {
     private String age;
     private String confirmCode;
     private String gender;
+    private String specializations;
+    private String category;
 
 
 

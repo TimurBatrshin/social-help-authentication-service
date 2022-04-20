@@ -8,7 +8,6 @@ import com.example.socialhelp.models.Сategory;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Locale;
 
 @Data
 @Builder
@@ -41,8 +40,9 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Token> tokens;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Сategory> categories;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Сategory categories;
+
     public enum State {
         ACTIVE, BANNED
     }

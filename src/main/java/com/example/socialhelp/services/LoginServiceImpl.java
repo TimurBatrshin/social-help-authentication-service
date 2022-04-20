@@ -19,9 +19,6 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TokenRepository tokenRepository;
-
 
     @Override
     public User login(LoginDto loginDto) {

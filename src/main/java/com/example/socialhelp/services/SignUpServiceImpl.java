@@ -1,8 +1,6 @@
 package com.example.socialhelp.services;
 
 import com.example.socialhelp.dto.SignUpForm;
-import com.example.socialhelp.dto.SignUpFormForExpert;
-import com.example.socialhelp.models.Specialization;
 import com.example.socialhelp.models.User;
 import com.example.socialhelp.models.Сategory;
 import com.example.socialhelp.repositories.SpecializationsRepository;
@@ -15,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,10 +25,7 @@ public class SignUpServiceImpl implements SignUpService {
     private UserRepository userRepository;
 
     @Autowired
-    private SpecializationsRepository specializationsRepository;
-
-    @Autowired
-    private СategoryRepository сategoryRepository;
+    private СategoryRepository categoryRepository;
 
     @Autowired
     private MailsGenerator mailsGenerator;
@@ -48,17 +41,20 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public User signUp(SignUpForm signUpForm) {
+        Сategory category = categoryRepository.getFirstByCategory(signUpForm.getCategory());
+
         User newUser = User.builder()
-                .firstName(signUpForm.getFirstName())
-                .lastName(signUpForm.getLastName())
+                .firstName(signUpForm.getFirstName().trim())
+                .lastName(signUpForm.getLastName().trim())
                 .email(signUpForm.getEmail().trim())
-                .hashPassword(passwordEncoder.encode(signUpForm.getPassword()))
+                .hashPassword(passwordEncoder.encode(signUpForm.getPassword().trim()))
                 .confirmCode(UUID.randomUUID().toString())
                 .role(User.Role.ADMIN)
                 .state(User.State.ACTIVE)
                 .confirm(User.Confirm.NOT_CONFIRM)
-                .age(signUpForm.getAge())
-                .gender(signUpForm.getGender())
+                .age(signUpForm.getAge().trim())
+                .gender(signUpForm.getGender().trim())
+                .categories(category)
                 .rating(0)
                 .build();
         userRepository.save(newUser);
@@ -70,33 +66,4 @@ public class SignUpServiceImpl implements SignUpService {
         return newUser;
     }
 
-    @Override
-    public User signUpForExpert(SignUpFormForExpert signUpFormForExpert) {
-        List<Specialization> specializations = specializationsRepository.findAllBySpecializations(signUpFormForExpert.getSpecializations());
-        List<Сategory> categories = сategoryRepository.findAllByCategory(signUpFormForExpert.getCategory());
-
-        User newUser = User.builder()
-                .firstName(signUpFormForExpert.getFirstName())
-                .lastName(signUpFormForExpert.getLastName())
-                .email(signUpFormForExpert.getEmail().trim())
-                .hashPassword(passwordEncoder.encode(signUpFormForExpert.getPassword()))
-                .confirmCode(UUID.randomUUID().toString())
-                .role(User.Role.ADMIN)
-                .state(User.State.ACTIVE)
-                .confirm(User.Confirm.NOT_CONFIRM)
-                .age(signUpFormForExpert.getAge())
-                .gender(signUpFormForExpert.getGender())
-                .rating(0)
-                .build();
-        userRepository.save(newUser);
-        Optional<User> user = userRepository.findByEmail(newUser.getEmail());
-
-
-
-        String confirmMail = mailsGenerator.getMailForConfirm(serverUrl, newUser.getConfirmCode());
-
-        emailUtil.sendMail(newUser.getEmail(), "Регистрация", from, confirmMail);
-
-        return null;
-    }
 }

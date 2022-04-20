@@ -9,10 +9,13 @@ import com.example.socialhelp.dto.TokenDto;
 import com.example.socialhelp.models.Token;
 import com.example.socialhelp.models.User;
 import com.example.socialhelp.repositories.TokenRepository;
+import com.example.socialhelp.repositories.UserRepository;
 import com.example.socialhelp.security.util.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -20,6 +23,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Autowired
     private TokenRepository tokenRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public TokenDto generateToken(User user) {
@@ -62,12 +68,20 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void saveToken(TokenDto token, User user) {
-        List<User> users = new ArrayList<>();
-        users.add(user);
-        Token refreshToken = Token.builder()
-                .token(token.getToken())
-                .build();
-        refreshToken.setUsers(users);
-        tokenRepository.save(refreshToken);
+        try {
+            if (tokenRepository.findTokenByUsers(user).getToken() == null){
+                List<User> users = new ArrayList<>();
+                users.add(user);
+                Token refreshToken = Token.builder()
+                        .token(token.getToken())
+                        .build();
+                refreshToken.setUsers(users);
+                tokenRepository.save(refreshToken);
+            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 }
