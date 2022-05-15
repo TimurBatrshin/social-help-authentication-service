@@ -4,32 +4,74 @@ Content-Type: application/json
 {
   "firstName": "Timur1",
   "lastName": "Batrshin1",
+  "patronymic": "Albertovich",
+  "birthday": "26-01-2002",
+  "city": "Kazan",
   "email": "batrshintimur@yandex.ru",
   "password": "Timur007",
-  "age": "20",
-  "gender": "men"
+  "gender": "men",
+  "isSpecialist": true,
+  "qualification": "vvdfvd",
+  "education": "dvsds",
+  "qualification_improvement": "dsvdvs",
+  "experience": 5,
+  "specialization": "medicine"
 }
 
 ###
-POST http://localhost:50719/login
+//авторизация
+POST http://localhost:60087/login
 Content-Type: application/json
 
 {
-  "email": "batrshintimur@yandex.ru",
-  "password": "Timur007"
+  "email": "batrshintimur1@yandex.ru",
+  "hashPassword": "Timur007"
 }
 
 ###
-
-POST http://localhost:50666/sign_up
+//для специалиста
+POST http://localhost:54622/sign_up
 Content-Type: application/json
 
 {
   "firstName": "Timur1",
   "lastName": "Batrshin1",
-  "email": "batrshintimur@yandex.ru",
-  "password": "Timur007",
-  "age": "20",
+  "patronymic": "Albertovich1",
+  "birthday": "2002-01-26",
+  "city": "Kazan",
+  "email": "batrshintimur1@yandex.ru",
+  "hashPassword": "Timur007",
   "gender": "men",
-  "category": "medicine"
+  "specialist": true,
+  "qualification": "vvdfvd",
+  "education": "dvsds",
+  "qualification_improvement": "dsvdvs",
+  "experience": 5,
+  "specialization": "Pediatrician"
 }
+
+###
+//для юзера
+POST http://localhost:59222/sign_up
+Content-Type: application/json
+
+{
+  "firstName": "Timur",
+  "lastName": "Batrshin",
+  "patronymic": "Albertovich",
+  "birthday": "2002-01-26",
+  "city": "Kazan",
+  "email": "batrshintimur@yandex.ru",
+  "hashPassword": "Timur007",
+  "gender": "men",
+  "specialist": false
+}
+
+###
+POST http://localhost:56188/refreshToken
+Content-Type: application/json
+
+{
+  "token": "f10333f7-bed1-40f2-91ae-637f61fb19ec"
+}
+

@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Сущность пользователя при аутентификации")
 public class LoginDto {
     private String email;
-    private String password;
+    private String hashPassword;
 }

@@ -13,15 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Сategory {
-
+public class PhotoDocuments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String url;
 
-    private String category;
-
-    @OneToOne(mappedBy = "categories", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    private User user;
+    @OneToMany(mappedBy = "photoDocuments")
+    private List<AdditionalInfoForSpecialist> additionalInfoForSpecialists;
 
 }

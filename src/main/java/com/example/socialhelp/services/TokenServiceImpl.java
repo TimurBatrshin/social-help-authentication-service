@@ -6,16 +6,15 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.socialhelp.dto.TokenDto;
+import com.example.socialhelp.dto.TokenPairDto;
 import com.example.socialhelp.models.Token;
 import com.example.socialhelp.models.User;
 import com.example.socialhelp.repositories.TokenRepository;
 import com.example.socialhelp.repositories.UserRepository;
 import com.example.socialhelp.security.util.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -25,25 +24,32 @@ public class TokenServiceImpl implements TokenService {
     private TokenRepository tokenRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository usersRepository;
 
     @Override
-    public TokenDto generateToken(User user) {
-        String token = JWT.create()
+    public String generateAccessToken(User user) {
+        return JWT.create()
                 .withSubject(user.getId().toString())
                 .withClaim(JwtTokenUtils.ROLE, user.getRole().toString())
-                .withClaim(JwtTokenUtils.STATE, user.getState().toString())
                 .withClaim(JwtTokenUtils.EMAIL, user.getEmail())
                 .withClaim(JwtTokenUtils.ID, user.getId())
+                .withIssuedAt(new Date())
+                .withExpiresAt(
+                        new Date(System.currentTimeMillis() + JwtTokenUtils.ACCESS_TOKEN_LIFE_TIME))
                 .sign(Algorithm.HMAC256(JwtTokenUtils.SECRET_KEY));
+    }
 
-        TokenDto tokenDto = TokenDto.builder()
-                .token(token)
+    @Override
+    public Token generateRefreshToken(User user) {
+        String refreshTokenToken = UUID.randomUUID().toString();
+        Token refreshToken = Token.builder()
+                .user(user)
+                .refreshToken(refreshTokenToken)
+                .create_time(new Date())
                 .build();
 
-        return tokenDto;
-
-
+        tokenRepository.save(refreshToken);
+        return refreshToken;
     }
 
     @Override
@@ -67,21 +73,40 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public void saveToken(TokenDto token, User user) {
-        try {
-            if (tokenRepository.findTokenByUsers(user).getToken() == null){
-                List<User> users = new ArrayList<>();
-                users.add(user);
-                Token refreshToken = Token.builder()
-                        .token(token.getToken())
-                        .build();
-                refreshToken.setUsers(users);
-                tokenRepository.save(refreshToken);
-            }
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public TokenPairDto refreshToken(TokenPairDto tokenPair) {
+        Token token = tokenRepository.findTokenByRefreshToken(tokenPair.getRefreshToken()).orElseThrow(IllegalAccessError::new);
 
+        Map<String, Claim> claims = getClaims(tokenPair.getAccessToken());
 
+        User user = usersRepository.findById(claims.get(JwtTokenUtils.ID).asLong()).orElseThrow(IllegalAccessError::new);
+        String newAccessToken = generateAccessToken(user);
+        String newRefreshToken = UUID.randomUUID().toString();
+
+        token.setRefreshToken(newRefreshToken);
+        token.setCreate_time(new Date());
+        tokenRepository.save(token);
+
+        return TokenPairDto.builder()
+                .refreshToken(newRefreshToken)
+                .accessToken(newAccessToken)
+                .build();
     }
+
+    @Override
+    public Map<String, Claim> getClaims(String token) {
+        try {
+            return JWT.require(Algorithm.HMAC256(JwtTokenUtils.SECRET_KEY))
+                    .build().verify(token).getClaims();
+        } catch (JWTVerificationException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public TokenPairDto generateTokenPair(User user) {
+        String accessToken = generateAccessToken(user);
+        String refreshToken = generateRefreshToken(user).getRefreshToken();
+        return new TokenPairDto(accessToken, refreshToken);
+    }
+
 }

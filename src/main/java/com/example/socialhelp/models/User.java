@@ -4,75 +4,61 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.socialhelp.models.Сategory;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "account")
+@Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String firstName;
-
     private String lastName;
-
+    private String patronymic;
+    private Date birthday;
+    private String city;
     private String email;
-
-    private String age;
-
-    private String hashPassword;
-
-    private String confirmCode;
-
-    private double rating;
-
     private String gender;
+    private String hashPassword;
+    private boolean isEmailConfirmed;
+    private double rate;
+    private String avatarUrl;
+    private boolean isSpecialist;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Token> tokens;
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private BloodType bloodType;
+    public enum BloodType {
+        M1, P1, M2, P2, M3, P3, M4, P4
+    }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Сategory categories;
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    public enum Role {
+        SIMPLE_USER, MODERATOR, ADMIN
+    }
 
+    @Enumerated(value = EnumType.STRING)
+    private State state;
     public enum State {
         ACTIVE, BANNED
     }
 
-    public enum Role {
-        USER, ADMIN, MODER, EXPERT
-    }
-    public enum Confirm{
-        CONFIRM, NOT_CONFIRM
-    }
+    @OneToOne(mappedBy = "user")
+    private AdditionalInfoForSpecialist additionalInfoForSpecialist;
 
-    @Enumerated(value = EnumType.STRING)
-    private Confirm confirm;
+    @OneToOne(mappedBy = "user")
+    private Token token;
 
-    @Enumerated(value = EnumType.STRING)
-    private State state;
-
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
-
-    public boolean isActive() {
+    public Boolean isActive() {
         return this.state == State.ACTIVE;
-    }
-
-    public boolean isBanned() {
-        return this.state == State.BANNED;
-    }
-
-    public boolean isAdmin() {
-        return this.role == Role.ADMIN;
     }
 
 }

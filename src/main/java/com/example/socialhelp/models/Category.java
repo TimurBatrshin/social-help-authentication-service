@@ -6,23 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Token {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String refreshToken;
-    private Date create_time;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User user;
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private CategoryType categoryType;
+    public enum CategoryType {
+        medicine
+    }
 
+    @OneToMany(mappedBy = "category")
+    private List<Specialization> specializations;
 
 }

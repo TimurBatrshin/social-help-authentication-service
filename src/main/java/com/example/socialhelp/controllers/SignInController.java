@@ -1,13 +1,9 @@
 package com.example.socialhelp.controllers;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.socialhelp.dto.LoginDto;
-import com.example.socialhelp.dto.SignUpForm;
 import com.example.socialhelp.dto.TokenDto;
+import com.example.socialhelp.dto.TokenPairDto;
 import com.example.socialhelp.models.User;
-import com.example.socialhelp.security.util.JwtTokenUtils;
 import com.example.socialhelp.services.LoginService;
 import com.example.socialhelp.services.TokenService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -33,16 +31,26 @@ public class SignInController {
     @Tag(name = "Аутентификация")
     @PermitAll
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         try {
+            System.out.println(loginDto);
             User user = loginService.login(loginDto);
-            TokenDto tokenDto = tokenService.generateToken(user);
-            tokenService.saveToken(tokenDto, user);
-            return ResponseEntity.ok(tokenDto);
+            TokenPairDto tokenPairDto = tokenService.generateTokenPair(user);
+//            Cookie accessCookie = new Cookie("accessToken", tokenPairDto.getAccessToken());
+//            Cookie refreshCookie = new Cookie("refreshToken", tokenPairDto.getRefreshToken());
+//            response.addCookie(accessCookie);
+//            response.addCookie(refreshCookie);
+//            System.out.println(tokenPairDto.toString());
+            return ResponseEntity.ok(tokenPairDto);
         } catch (UsernameNotFoundException e) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("status", e.getMessage());
             return new ResponseEntity<>(jsonObject, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("login")
+    public ResponseEntity<?> getTokens(){
+        return null;
     }
 }

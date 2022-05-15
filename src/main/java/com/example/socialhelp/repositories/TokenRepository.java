@@ -1,10 +1,15 @@
 package com.example.socialhelp.repositories;
 
 import com.example.socialhelp.models.Token;
-import com.example.socialhelp.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface TokenRepository extends JpaRepository<Token, Long> {
 
-    Token findTokenByUsers(User user);
+    Optional<Token> findTokenByRefreshToken(String token);
+
+    Optional<Token> findTokenById(Long id);
+
+
 }

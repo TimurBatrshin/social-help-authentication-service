@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SpecializationsRepository extends JpaRepository<Specialization, Long> {
 
-    List<Specialization> findAllBySpecializations(String name);
+    Specialization findSpecializationBySpecializationType(String name);
 }

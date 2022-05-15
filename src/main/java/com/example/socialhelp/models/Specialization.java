@@ -18,9 +18,20 @@ public class Specialization {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String specializations;
+    @OneToMany(mappedBy = "specialization")
+    private List<AdditionalInfoForSpecialist> additionalInfoForSpecialists;
 
     @ManyToOne
-    private Сategory category;
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
+
+    private String specializationType;
+
+    public enum SpecializationType {
+        Pediatrician, Therapist, Gynecologist, Dermatologist, Gastroenterologist, Psychologist, Cosmetologist, Urologist, Neurologist, Venereologist, Veterinarian, Cardiologist, LOR, Ophthalmologist, Oncologist, Traumatologist, Dentist, AllergistImmunologist, Endocrinologist
+    }
+
 
 }
