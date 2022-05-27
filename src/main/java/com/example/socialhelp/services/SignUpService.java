@@ -5,4 +5,5 @@ import com.example.socialhelp.models.User;
 
 public interface SignUpService {
     User signUp(SignUpForm signUpForm);
+
 }

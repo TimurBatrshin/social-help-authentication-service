@@ -30,7 +30,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         if (claims != null) {
             User user = User.builder()
                     .email(claims.get(JwtTokenUtils.EMAIL).asString())
-                    .state(claims.get(JwtTokenUtils.STATE).as(User.State.class))
                     .role(claims.get(JwtTokenUtils.ROLE).as(User.Role.class))
                     .id(claims.get(JwtTokenUtils.ID).asLong())
                     .build();
@@ -47,3 +46,4 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         return JwtAuthentication.class.equals(authentication);
     }
 }
+

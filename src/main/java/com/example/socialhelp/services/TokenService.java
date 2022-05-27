@@ -2,6 +2,8 @@ package com.example.socialhelp.services;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.example.socialhelp.dto.TokenDto;
+import com.example.socialhelp.dto.TokenPairDto;
+import com.example.socialhelp.models.Token;
 import com.example.socialhelp.models.User;
 
 
@@ -9,8 +11,18 @@ import java.util.Map;
 
 public interface TokenService {
 
-    TokenDto generateToken(User user);
+    String generateAccessToken(User user);
+
+    String generateRefreshToken(User user);
+
     Map<String, Claim> verifyToken(String token);
+
     boolean validateToken(String token);
-    void saveToken(TokenDto token, User user);
+
+    TokenPairDto refreshToken(TokenPairDto tokenPair);
+
+    Map<String, Claim> getClaims(String token);
+
+    TokenPairDto generateTokenPair(User user);
+
 }

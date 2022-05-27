@@ -1,6 +1,10 @@
 package com.example.socialhelp.security.details;
 
 import com.example.socialhelp.models.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
     private User user;
@@ -21,14 +28,10 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
 
-    public UserDetailsImpl(User user){
-        this.user=user;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
-        return Collections.singleton(authority);
+        return Collections
+                .singleton(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
@@ -43,7 +46,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return user.isActive();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return user.isActive();
     }
 
     @Override

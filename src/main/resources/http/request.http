@@ -1,34 +1,124 @@
+POST http://localhost:49549/sign_up
+Content-Type: application/json
+
+{
+  "firstName": "Timur1",
+  "lastName": "Batrshin1",
+  "patronymic": "Albertovich",
+  "birthday": "26-01-2002",
+  "city": "Kazan",
+  "email": "batrshintimur@yandex.ru",
+  "password": "Timur007",
+  "gender": "men",
+  "isSpecialist": true,
+  "qualification": "vvdfvd",
+  "education": "dvsds",
+  "qualification_improvement": "dsvdvs",
+  "experience": 5,
+  "specialization": "medicine"
+}
+
+###
+//авторизация
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "batrshintimur3@yandex.ru",
+  "hashPassword": "Timur007"
+}
+
+###
+//для специалиста
 POST http://localhost/authentication/sign_up
 Content-Type: application/json
 
 {
-  "firstName": "Timur1",
-  "lastName": "Batrshin1",
-  "email": "batrshintimur@yandex.ru",
-  "password": "Timur007",
-  "age": "20",
-  "gender": "men"
+  "firstName": "Timur3",
+  "lastName": "Batrshin3",
+  "patronymic": "Albertovich3",
+  "birthday": "2002-01-26",
+  "city": "Kazan",
+  "email": "batrshintimur3@yandex.ru",
+  "hashPassword": "Timur007",
+  "gender": "men",
+  "specialist": true,
+  "qualification": "vvdfvd",
+  "education": "dvsds",
+  "qualification_improvement": "dsvdvs",
+  "experience": 5,
+  "specialization": "Pediatrician"
 }
 
 ###
-POST http://localhost:49446/login
+//для юзера
+POST http://localhost:56292/sign_up
 Content-Type: application/json
 
 {
+  "firstName": "Timur",
+  "lastName": "Batrshin",
+  "patronymic": "Albertovich",
+  "birthday": "2002-01-26",
+  "city": "Kazan",
   "email": "batrshintimur@yandex.ru",
-  "password": "Timur007"
+  "hashPassword": "Timur007",
+  "gender": "men",
+  "specialist": false
 }
 
 ###
-
-POST http://localhost:65116/sign_up
+POST http://localhost:56188/refreshToken
 Content-Type: application/json
 
 {
-  "firstName": "Timur1",
-  "lastName": "Batrshin1",
-  "email": "batrshintimur@yandex.ru",
-  "password": "Timur007",
-  "age": "20",
-  "gender": "men"
+  "token": "f10333f7-bed1-40f2-91ae-637f61fb19ec"
 }
+
+###
+GET http://localhost:8080/profile
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkFETUlOIiwiaWQiOjQsImV4cCI6MTY1MzY4Mzk5NywiaWF0IjoxNjUzNjgyMTk3LCJlbWFpbCI6ImJhdHJzaGludGltdXIzQHlhbmRleC5ydSJ9.i3U86ChJUhwuOoDm5aji2Y9mR01qWyBNvJcFvsvrJlw
+
+###
+GET http://localhost:8080/allProblem
+
+###
+GET http://localhost/authentication/problem/1
+
+###
+GET http://localhost:8080/problem/allSpecialist
+
+###
+GET http://localhost:8080/AllSpecialization
+
+###
+GET http://localhost/authentication/specialization/1
+
+###
+POST http://localhost:49549/setTimeTable/1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkFETUlOIiwiaWQiOjQsImV4cCI6MTY1MzY1NjcwNiwiaWF0IjoxNjUzNjU0OTA2LCJlbWFpbCI6ImJhdHJzaGludGltdXIzQHlhbmRleC5ydSJ9.A5RPZuDXD18fO6aLzF4Ip8xNmLJhEMi7yUq8CcuPstc
+Content-Type: application/json
+
+{
+  "timeStamp": 483478378473784,
+  "description": "У больного болит пенис"
+}
+
+###
+GET http://localhost:49549/timeTable
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkFETUlOIiwiaWQiOjQsImV4cCI6MTY1MzY1NjcwNiwiaWF0IjoxNjUzNjU0OTA2LCJlbWFpbCI6ImJhdHJzaGludGltdXIzQHlhbmRleC5ydSJ9.A5RPZuDXD18fO6aLzF4Ip8xNmLJhEMi7yUq8CcuPstc
+
+###
+POST http://localhost:49549/editProfile
+Content-Type: application/json
+
+{
+  "firstName": "fff",
+  "lastName": "fff",
+  "city": "fff"
+}
+
+###
+GET http://localhost:8080/profile/2
+
+

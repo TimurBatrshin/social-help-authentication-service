@@ -1,13 +1,8 @@
 package com.example.socialhelp.controllers;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.socialhelp.dto.LoginDto;
-import com.example.socialhelp.dto.SignUpForm;
-import com.example.socialhelp.dto.TokenDto;
+import com.example.socialhelp.dto.TokenPairDto;
 import com.example.socialhelp.models.User;
-import com.example.socialhelp.security.util.JwtTokenUtils;
 import com.example.socialhelp.services.LoginService;
 import com.example.socialhelp.services.TokenService;
 import net.minidev.json.JSONObject;
@@ -18,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -30,31 +26,22 @@ public class SignInController {
     private TokenService tokenService;
 
     @PermitAll
-    @PostMapping("/sign_in")
-    public ResponseEntity<?> signUp(@RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(loginService.login(loginDto));
-    }
-
-    @GetMapping("/test")
-    public String test() {
-        return "Test";
-    }
-
-    @PermitAll
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         try {
+            System.out.println(loginDto);
             User user = loginService.login(loginDto);
-            TokenDto tokenDto = tokenService.generateToken(user);
-            tokenService.saveToken(tokenDto, user);
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JwtTokenUtils.SECRET_KEY))
-                    .build().verify(tokenDto.getToken());
-            System.out.println(decodedJWT.getToken());
-            return ResponseEntity.ok(tokenDto);
+            TokenPairDto tokenPairDto = tokenService.generateTokenPair(user);
+            return ResponseEntity.ok(tokenPairDto);
         } catch (UsernameNotFoundException e) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("status", e.getMessage());
             return new ResponseEntity<>(jsonObject, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("login")
+    public ResponseEntity<?> getTokens(){
+        return null;
     }
 }
