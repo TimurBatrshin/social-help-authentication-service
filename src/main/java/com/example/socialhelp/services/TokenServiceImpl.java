@@ -40,15 +40,9 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Token generateRefreshToken(User user) {
-        String refreshTokenToken = UUID.randomUUID().toString();
-        Token refreshToken = Token.builder()
-                .user(user)
-                .refreshToken(refreshTokenToken)
-                .create_time(new Date())
-                .build();
+    public String generateRefreshToken(User user) {
+        String refreshToken = UUID.randomUUID().toString();
 
-        tokenRepository.save(refreshToken);
         return refreshToken;
     }
 
@@ -105,7 +99,15 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public TokenPairDto generateTokenPair(User user) {
         String accessToken = generateAccessToken(user);
-        String refreshToken = generateRefreshToken(user).getRefreshToken();
+        String refreshToken = generateRefreshToken(user);
+        Token token = Token.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .create_time(new Date())
+                .user(user)
+                .build();
+        tokenRepository.save(token);
+
         return new TokenPairDto(accessToken, refreshToken);
     }
 

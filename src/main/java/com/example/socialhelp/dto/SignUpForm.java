@@ -2,7 +2,6 @@ package com.example.socialhelp.dto;
 
 import com.example.socialhelp.validation.ValidNames;
 import com.example.socialhelp.validation.ValidPassword;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +20,6 @@ import java.util.Date;
         name = "first_name",
         surname = "last_name"
 )
-@Schema(description = "Сущность пользователя")
 public class SignUpForm {
 //    private String firstName;
 //    private String lastName;

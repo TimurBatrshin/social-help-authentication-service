@@ -1,5 +1,6 @@
 package com.example.socialhelp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +13,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("specialization")
 @Entity
-public class PhotoDocuments {
+public class Problem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String url;
-    @OneToMany(mappedBy = "photoDocuments")
-    private List<AdditionalInfoForSpecialist> additionalInfoForSpecialists;
+    private String problemDescription;
+    private String photoUrl;
+    @ManyToOne
+    private Specialization specialization;
 
 }

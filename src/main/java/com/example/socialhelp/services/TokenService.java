@@ -13,7 +13,7 @@ public interface TokenService {
 
     String generateAccessToken(User user);
 
-    Token generateRefreshToken(User user);
+    String generateRefreshToken(User user);
 
     Map<String, Claim> verifyToken(String token);
 

@@ -6,19 +6,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PhotoDocuments {
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String storageFileName;
+    private String originalFilename;
+    private String type;
+    private Long size;
     private String url;
-    @OneToMany(mappedBy = "photoDocuments")
-    private List<AdditionalInfoForSpecialist> additionalInfoForSpecialists;
-
+//    @OneToOne
+//    private User user;
+//    @OneToOne
+//    private AdditionalInfoForSpecialist additionalInfoForSpecialists;
 }

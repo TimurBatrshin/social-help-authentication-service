@@ -6,10 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class LoginDto {
-    private String email;
-    private String hashPassword;
+public class EditProfileDto {
+    private String firstName;
+    private String lastName;
+    private String city;
+    private String gender;
 }
