@@ -9,7 +9,8 @@ import com.example.socialhelp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TimeTableServiceImpl implements TimeTableService {
@@ -37,15 +38,21 @@ public class TimeTableServiceImpl implements TimeTableService {
     }
 
     @Override
-    public TimeTableUsersDto getTimeTable(Long id) {
-        TimeTable timeTable = timeTableRepository.findByUserId(id);
-        return TimeTableUsersDto.builder()
-                .description(timeTable.getDescription())
-                .firstNameSpec(timeTable.getSpecialist().getFirstName())
-                .lastNameSpec(timeTable.getSpecialist().getLastName())
-                .firstNameUser(timeTable.getUser().getFirstName())
-                .lastNameUser(timeTable.getUser().getLastName())
-                .timeStamp(timeTable.getTimeStamp())
-                .build();
+    public List<TimeTableUsersDto> getTimeTable(Long id) {
+        List<TimeTable> timeTable = timeTableRepository.getTimeTable(id);
+        List<TimeTableUsersDto> timeTableUsersDtos = new ArrayList<>();
+        for (int i = 0; i < timeTable.size(); i++) {
+            TimeTableUsersDto timeTableUsersDto = TimeTableUsersDto.builder()
+                    .description(timeTable.get(i).getDescription())
+                    .firstNameSpec(timeTable.get(i).getSpecialist().getFirstName())
+                    .lastNameSpec(timeTable.get(i).getSpecialist().getLastName())
+                    .firstNameUser(timeTable.get(i).getUser().getFirstName())
+                    .lastNameUser(timeTable.get(i).getUser().getLastName())
+                    .timeStamp(timeTable.get(i).getTimeStamp())
+                    .build();
+            timeTableUsersDtos.add(timeTableUsersDto);
+
+        }
+        return timeTableUsersDtos;
     }
 }

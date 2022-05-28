@@ -24,7 +24,7 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email": "batrshintimur3@yandex.ru",
+  "email": "batrshintimur1@yandex.ru",
   "hashPassword": "Timur007"
 }
 
@@ -92,7 +92,7 @@ GET http://localhost:8080/problem/allSpecialist
 GET http://localhost:8080/AllSpecialization
 
 ###
-GET http://localhost/authentication/specialization/1
+GET http://localhost:8080/specialization/1
 
 ###
 POST http://localhost:49549/setTimeTable/1
@@ -101,12 +101,12 @@ Content-Type: application/json
 
 {
   "timeStamp": 483478378473784,
-  "description": "У больного болит пенис"
+  "description": "У больного болит голова"
 }
 
 ###
-GET http://localhost:49549/timeTable
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkFETUlOIiwiaWQiOjQsImV4cCI6MTY1MzY1NjcwNiwiaWF0IjoxNjUzNjU0OTA2LCJlbWFpbCI6ImJhdHJzaGludGltdXIzQHlhbmRleC5ydSJ9.A5RPZuDXD18fO6aLzF4Ip8xNmLJhEMi7yUq8CcuPstc
+GET http://localhost:8080/timeTable
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkFETUlOIiwiaWQiOjQsImV4cCI6MTY1MzcwMDc0MCwiaWF0IjoxNjUzNjk4OTQwLCJlbWFpbCI6ImJhdHJzaGludGltdXIzQHlhbmRleC5ydSJ9.NECmjbTHtqMaNZbrLuIluNQSDOl8W9pXz5X3zj2j5eY
 
 ###
 POST http://localhost:49549/editProfile
@@ -121,4 +121,9 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/profile/2
 
+###
+GET http://localhost:8080/getFiles
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IkFETUlOIiwiaWQiOjEsImV4cCI6MTY1MzY5MjAxMCwiaWF0IjoxNjUzNjkwMjEwLCJlbWFpbCI6ImJhdHJzaGludGltdXIxQHlhbmRleC5ydSJ9.nPBF6V3Udvl5N1XV6MqZeGVl7MISHIWkmFzVlml4pYY
 
+###
+GET http://localhost:8080/problems/getFiles/D:\SocialHelpProject\SocialHelp\image\problem\img1.jpg

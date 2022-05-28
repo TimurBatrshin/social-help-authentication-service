@@ -1,5 +1,6 @@
 package com.example.socialhelp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties("user")
 @Entity
 public class File {
     @Id
@@ -21,8 +23,6 @@ public class File {
     private String type;
     private Long size;
     private String url;
-//    @OneToOne
-//    private User user;
-//    @OneToOne
-//    private AdditionalInfoForSpecialist additionalInfoForSpecialists;
+    @OneToOne
+    private User user;
 }

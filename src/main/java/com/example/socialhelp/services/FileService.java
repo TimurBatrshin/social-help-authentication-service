@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FileService {
-    String save(MultipartFile multipartFile) throws IOException;
+    String save(MultipartFile multipartFile, Long id) throws IOException;
     Optional<File> getFile(Long id);
     List<File> getAllFiles();
-    void writeFileToResponse(String fileName, HttpServletResponse response);
+    void writeFileToResponse(Long id, HttpServletResponse response);
 }
