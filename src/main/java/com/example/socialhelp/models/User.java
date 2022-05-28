@@ -47,8 +47,8 @@ public class User {
     private List<TimeTable> timeTables_user;
     @OneToMany(mappedBy = "specialist")
     private List<TimeTable> timeTables_specialist;
-//    @OneToOne(mappedBy = "user")
-//    private File file;
+    @OneToOne(mappedBy = "user")
+    private File file;
 
     public enum BloodType {
         M1, P1, M2, P2, M3, P3, M4, P4

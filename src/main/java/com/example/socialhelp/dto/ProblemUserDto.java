@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 @Data
@@ -14,10 +15,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProblemUserDto {
+    private Long id;
     private String firstName;
     private String lastName;
     private String city;
     private double rate;
     private String avatarUrl;
-    private Specialization specialization;
+    private String specialization;
+    private int experience;
 }

@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         List<ProblemUserDto> problemUserDtos = new ArrayList<>();
         for (int i = 0; i < user.size(); i++) {
             ProblemUserDto problemUserDto = ProblemUserDto.builder()
-                    .specialization(user.get(i).getAdditionalInfoForSpecialist().getSpecialization())
+                    .specialization(user.get(i).getAdditionalInfoForSpecialist().getSpecialization().getSpecializationType())
                     .avatarUrl(user.get(i).getAvatarUrl())
                     .city(user.get(i).getCity())
                     .firstName(user.get(i).getFirstName())
@@ -65,12 +65,14 @@ public class UserServiceImpl implements UserService {
         List<ProblemUserDto> problemUserDtos = new ArrayList<>();
         for (int i = 0; i < user.size(); i++) {
             ProblemUserDto problemUserDto = ProblemUserDto.builder()
-                    .specialization(user.get(i).getAdditionalInfoForSpecialist().getSpecialization())
+                    .id(user.get(i).getId())
+                    .specialization(user.get(i).getAdditionalInfoForSpecialist().getSpecialization().getSpecializationType())
                     .avatarUrl(user.get(i).getAvatarUrl())
                     .city(user.get(i).getCity())
                     .firstName(user.get(i).getFirstName())
                     .lastName(user.get(i).getLastName())
                     .rate(user.get(i).getRate())
+                    .experience(user.get(i).getAdditionalInfoForSpecialist().getExperience())
                     .build();
             problemUserDtos.add(problemUserDto);
         }

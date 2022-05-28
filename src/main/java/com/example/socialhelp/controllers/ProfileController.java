@@ -38,16 +38,16 @@ public class ProfileController {
     }
 
     @PostMapping("/editProfile")
-    @PermitAll
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> editProfile(@RequestBody EditProfileDto editProfileDto){
         userService.editProfile(1L, editProfileDto);
         return ResponseEntity.ok(editProfileDto);
     }
 
     @GetMapping("/profile/{id}")
+    @PermitAll
     public ResponseEntity<?> getUserProfile(@PathVariable Long id){
         return ResponseEntity.ok(userService.findUserById(id));
-
     }
 
 }

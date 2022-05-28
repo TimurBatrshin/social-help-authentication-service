@@ -5,6 +5,7 @@ import com.example.socialhelp.repositories.ProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,14 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public List<Problem> findAll() {
+    public List<Problem> findAll() throws IOException {
         return problemRepository.findAll();
     }
+
+    @Override
+    public Problem findByName(String name) {
+        return problemRepository.findByPhotoUrl(name);
+    }
+
+
 }
